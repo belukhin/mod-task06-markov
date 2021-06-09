@@ -1,20 +1,19 @@
+#include <vector>
+#include <string>
 #include <deque>
 #include <map>
-#include <string>
-#include <vector>
 
 using namespace std;
 
-class Markov
+class GenMarkov
 {
-    private:
-        typedef deque<string> prefix;
-        map<prefix, vector<string>> statelab;
-        int NPREF = 2;
-        int MAXGEN = 1000;
-
-    public:
-        Markov(vector<string>, int, int);
-        Markov(map<prefix, vector<string>>, int);
-        string TextGen();
+    typedef deque<string> prefix;
+public:
+    string GenText();
+    GenMarkov(vector<string> allwords, int prfx_k, int gen_k);
+    GenMarkov(map<prefix, vector<string>> Gen, int gen_k);
+private:
+    map<prefix, vector<string>> statelab;
+    int NPREF = 2;
+    int MAXGEN = 1000;
 };

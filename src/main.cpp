@@ -4,26 +4,26 @@
 
 int main()
 {
-    ifstream file_in;
-    ofstream file_out;
+    ifstream myFile;
+    myFile.open("fst.txt");
+
     vector<string> words;
-    string word;
-
-    file_in.open("text.txt");
-    while (!file_in.eof()){
-        file_in >> word;
-        words.push_back(word);
+    string Word;
+    while (!myFile.eof())
+    {
+        myFile >> Word;
+        words.push_back(Word);
     }
-    file_in.close();
+    myFile.close();
 
-    Markov Gen(words, 2, 1000);
-    string line = Gen.TextGen();
+    GenMarkov Gen(words, 2, 1000);
+    string line = Gen.GenText();
 
-    
-    file_out.open("output.txt");
-    file_out.clear();
-    file_out << line;
-    file_out.close();
+    ofstream myOut;
+    myOut.open("sec.txt");
+    myOut.clear();
+    myOut << line;
+    myOut.close();
 
     return 1;
 }

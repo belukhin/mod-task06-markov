@@ -1,61 +1,60 @@
-// Copyright 2021 GHA Test Team
 #include <gtest/gtest.h>
 #include "textgen.h"
 
-TEST(task1, test1)
+TEST(Test1, point1)
 {
-    vector<string> words{"Don't", "stop", "me", "now!"};
-    Markov Gen(words, 3, 100);
-    string output = Gen.TextGen();
-    if (output[0] = 'D')
-        ASSERT_STREQ("Don't stop me now! ", output.c_str());
+    vector<string> words{ "Hello", "World" };
+    GenMarkov Gen(words, 2, 1000);
+    string output = Gen.GenText();
+    if (output[0] = 'H')
+        ASSERT_STREQ("Hello World ", output.c_str());
     else
-        ASSERT_STREQ("stop me now! ", output.c_str());
+        ASSERT_STREQ("World ", output.c_str());
 }
 
-TEST(task2, test1)
+TEST(Test2, point2)
 {
-    vector<string> words{"Hello", "world"};
-    Markov Gen(words, 2, 100);
-    ASSERT_STREQ("Hello world ", Gen.TextGen().c_str());
+    vector<string> words{ "Hello", "World" };
+    GenMarkov Gen(words, 2, 1000);
+    ASSERT_STREQ("Hello World ", Gen.GenText().c_str());
 }
 
-TEST(task3, test1)
+TEST(Test3, point3)
 {
-    map<deque<string>, vector<string>> dict;
-    dict[{"Enjoy", "your"}].push_back("flight");
-    dict[{"your", "flight"}].push_back("<Last_Prefix>");
-    Markov Gen(dict, 100);
-    string output = Gen.TextGen();
-    if (output[0] == 'E')
-        ASSERT_STREQ("Enjoy your flight ", output.c_str());
+    map<deque<string>, vector<string>> str;
+    str[{ "Hello", "World" }].push_back("!");
+    str[{"World", "!"}].push_back("<Last_Prefix>");
+    GenMarkov Gen(str, 1000);
+    string output = Gen.GenText();
+    if (output[0] == 'H')
+        ASSERT_STREQ("Hello World ! ", output.c_str());
     else
-        ASSERT_EQ('y', output[0]);
+        ASSERT_EQ('W', output[0]);
 }
 
-TEST(task4, test1)
+TEST(Test4, point4)
 {
-    map<deque<string>, vector<string>> dict;
-    dict[{"Enjoy", "your"}].push_back("life");
-    dict[{"Enjoy", "your"}].push_back("moment");
-    dict[{"your", "life"}].push_back("<Last_Prefix>");
-    dict[{"your", "moment"}].push_back("<Last_Prefix>");
+    map<deque<string>, vector<string>> str;
+    str[{ "Hello", "World" }].push_back("!");
+    str[{ "Hello", "World" }].push_back("?");
+    str[{"World", "!"}].push_back("<Last_Prefix>");
+    str[{"World", "?"}].push_back("<Last_Prefix>");
 
-    Markov Gen(dict, 100);
-    string output = Gen.TextGen();
-    if (output[0] == 'y')
-        ASSERT_EQ('y', output[0]);
-    else if (output[output[output.length() - 2]] == 'e')
-        ASSERT_STREQ("Enjoy your life ", output.c_str());
+    GenMarkov Gen(str, 1000);
+    string output = Gen.GenText();
+    if (output[0] == 'W')
+        ASSERT_EQ('W', output[0]);
+    else if (output[output[output.length() - 2]] == 'H')
+        ASSERT_STREQ("Hello World ! ", output.c_str());
     else
-        ASSERT_STREQ("Enjoy your moment ", output.c_str());
+        ASSERT_STREQ("Hello World ? ", output.c_str());
 }
 
-TEST(task5, test1)
+TEST(Test5, point5)
 {
-    vector<string> words{"Do", "you", "want", "to", "be", "yourself,", "when", "you", "are,", "not", "it."};
-    Markov Gen(words, 2, 100);
-    string output = Gen.TextGen();
+    vector<string> words{ "Hello", "again", "my", "friend", "hello", "again." };
+    GenMarkov Gen(words, 2, 100);
+    string output = Gen.GenText();
     if (output[output.length() - 2] == '.')
         ASSERT_EQ('.', output[output.length() - 2]);
     else
